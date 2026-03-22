@@ -1,11 +1,11 @@
 ---
 name: infographic
-description: 小红书爆款信息图生成技能，支持8种视觉风格，将复杂知识转化为高密度干货内容。
+description: 抖音爆款信息图生成技能，支持8种视觉风格，将复杂知识转化为高密度干货内容。
 ---
 
 # Infographic 信息图生成技能
 
-将复杂专业知识转化为高密度、视觉化的小红书爆款干货内容。
+将复杂专业知识转化为高密度、视觉化的抖音爆款干货内容。
 
 ## 触发条件
 
@@ -173,7 +173,7 @@ curl -L -s -o "<输出目录>/[主题]_[序号]_[风格].jpg" "<图片URL>"
 
 **图片生成 Prompt：**
 ```
-Create a high-density infographic poster for Xiaohongshu about「[主题]」.
+Create a high-density infographic poster for Douyin about「[主题]」.
 
 STYLE: Modern receipt/ticket aesthetic with perforated edges and 3D skeuomorphic header.
 
@@ -227,7 +227,7 @@ Aspect Ratio: 3:4 (Portrait)
 
 **图片生成 Prompt：**
 ```
-Create a high-density infographic poster for Xiaohongshu about「[主题]」.
+Create a high-density infographic poster for Douyin about「[主题]」.
 
 STYLE: "Evidence Board" / Detective case file aesthetic with mixed media scrapbook elements.
 
@@ -282,7 +282,7 @@ Aspect Ratio: 3:4 (Portrait)
 
 **图片生成 Prompt：**
 ```
-Create a flat graphic design infographic poster for Xiaohongshu about「[主题]」.
+Create a flat graphic design infographic poster for Douyin about「[主题]」.
 
 STYLE: 1970s retro pop art and underground comic illustration style.
 - Strict Swiss international grid system layout
@@ -336,7 +336,7 @@ Aspect Ratio: 3:4 (Portrait)
 
 **图片生成 Prompt：**
 ```
-Create a high-density infographic poster for Xiaohongshu about「[主题]」.
+Create a high-density infographic poster for Douyin about「[主题]」.
 
 STYLE: Vintage Scrapbook & Hand-drawn Journal / Detective Evidence Board aesthetic.
 
@@ -394,7 +394,7 @@ Aspect Ratio: 3:4 (Portrait)
 
 **图片生成 Prompt：**
 ```
-Create a high-density, professional information design infographic for Xiaohongshu about「[主题]」.
+Create a high-density, professional information design infographic for Douyin about「[主题]」.
 
 === CRITICAL STYLE REQUIREMENTS (SYSTEMIC & EXPERIMENTAL) ===
 
@@ -465,7 +465,7 @@ Aspect Ratio: 3:4 (Portrait)
 
 **图片生成 Prompt：**
 ```
-Create a high-density infographic poster for Xiaohongshu about「[主题]」.
+Create a high-density infographic poster for Douyin about「[主题]」.
 
 STYLE: Theater-Ticket & Scrapbook Style with "5-Act Play" narrative structure.
 
@@ -515,7 +515,7 @@ Aspect Ratio: 3:4 (Portrait)
 
 **图片生成 Prompt：**
 ```
-Create a high-density infographic poster for Xiaohongshu about「[主题]」.
+Create a high-density infographic poster for Douyin about「[主题]」.
 
 STYLE: Retro-Futurist / Acid Graphic style with Y2K Tech-Nostalgia aesthetic.
 
@@ -566,7 +566,7 @@ Aspect Ratio: 3:4 (Portrait)
 
 **图片生成 Prompt：**
 ```
-Create a high-density infographic poster for Xiaohongshu about「[主题]」.
+Create a high-density infographic poster for Douyin about「[主题]」.
 
 STYLE: Neo-skeuomorphism stationery style, 3D render feel, clean and organized.
 
