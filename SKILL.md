@@ -70,12 +70,12 @@ description: 抖音爆款信息图生成技能，支持8种视觉风格，将复
 ```
 🤖 请选择生成模型：
 
-1️⃣ gemini-3.1-flash-image-preview-4k（默认推荐）
+1️⃣ gemini-3.1-flash-image-preview-4k（别名：nano-banana-2-4k，默认推荐）
    - 分辨率：3584×4800, 4K 高清
    - 价格：¥0.25 / 张
    - 特点：性价比高，生成速度快
 
-2️⃣ gemini-3-pro-image-preview-4k
+2️⃣ gemini-3-pro-image-preview-4k（别名：nano-banana-pro-4k）
    - 分辨率：3584×4800, 4K 高清
    - 价格：¥0.35 / 张
    - 特点：画质更精细，适合追求最佳效果
@@ -115,9 +115,12 @@ curl -s -X POST "https://api.tu-zi.com/v1/images/generations" \
 - Endpoint: `/v1/images/generations`
 - 认证: `Bearer $TUZI_API_KEY` (环境变量，需提前设置)
 - 模型选项:
-  - `gemini-3.1-flash-image-preview-4k`（默认）：3584×4800, 4K 高清, ¥0.25/张
-  - `gemini-3-pro-image-preview-4k`：3584×4800, 4K 高清, ¥0.35/张
+  - `gemini-3.1-flash-image-preview-4k`（别名：`nano-banana-2-4k`，默认）：3584×4800, 4K 高清, ¥0.25/张
+  - `gemini-3-pro-image-preview-4k`（别名：`nano-banana-pro-4k`）：3584×4800, 4K 高清, ¥0.35/张
   - `nano-banana-2`：1792×2400, 快速生成
+- 模型别名映射（用户输入别名时自动转换为实际模型 ID）:
+  - `nano-banana-2-4k` → `gemini-3.1-flash-image-preview-4k`
+  - `nano-banana-pro-4k` → `gemini-3-pro-image-preview-4k`
 - 尺寸选项:
   - `3x4`（默认）：3584×4800, 4K 高清
   - `1792x2400`：1792×2400, 配合 nano-banana-2 使用
