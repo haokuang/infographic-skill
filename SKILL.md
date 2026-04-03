@@ -164,28 +164,50 @@ curl -L -s -o "<输出目录>/[主题]_[序号]_[风格].jpg" "<图片URL>"
 
 每张图片下载完成后，立即压缩，**原文件直接覆盖**（不保留原图）。
 
-**压缩命令（使用 macOS 内置 sips）：**
+**压缩命令（自动检测系统和可用工具）：**
 
 ```bash
-# 压缩图片质量至 80%，原文件覆盖
-sips --setProperty formatOptions 80 "<图片路径>"
-```
+IMG="<图片路径>"
 
-**压缩前后对比提示：**
+# 获取压缩前大小
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  BEFORE=$(stat -f%z "$IMG")
+else
+  BEFORE=$(stat -c%s "$IMG")
+fi
 
-```bash
-# 获取压缩前文件大小
-BEFORE=$(stat -f%z "<图片路径>")
+# 按优先级选择压缩工具
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS：优先用内置 sips
+  sips --setProperty formatOptions 80 "$IMG"
+elif command -v convert &>/dev/null; then
+  # Linux：ImageMagick（最常见）
+  convert "$IMG" -quality 80 "$IMG"
+elif command -v jpegoptim &>/dev/null; then
+  # Linux：jpegoptim
+  jpegoptim --max=80 --overwrite "$IMG"
+elif command -v ffmpeg &>/dev/null; then
+  # 兜底：ffmpeg
+  TMP="${IMG}.tmp.jpg"
+  ffmpeg -i "$IMG" -q:v 4 "$TMP" -y -loglevel quiet && mv "$TMP" "$IMG"
+else
+  echo "⚠️ 未找到可用的压缩工具（sips/convert/jpegoptim/ffmpeg），跳过压缩"
+fi
 
-# 执行压缩
-sips --setProperty formatOptions 80 "<图片路径>"
-
-# 获取压缩后文件大小
-AFTER=$(stat -f%z "<图片路径>")
-
-# 显示压缩结果
+# 获取压缩后大小并显示结果
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  AFTER=$(stat -f%z "$IMG")
+else
+  AFTER=$(stat -c%s "$IMG")
+fi
 echo "压缩完成：$(echo "scale=1; $BEFORE/1048576" | bc)MB → $(echo "scale=1; $AFTER/1048576" | bc)MB"
 ```
+
+**工具优先级：**
+| 系统 | 优先级 |
+|------|--------|
+| macOS | `sips`（内置）→ `convert` → `ffmpeg` |
+| Linux | `convert`（ImageMagick）→ `jpegoptim` → `ffmpeg` |
 
 **显示格式：**
 ```
