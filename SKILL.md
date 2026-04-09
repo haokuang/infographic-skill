@@ -100,7 +100,7 @@ description: 抖音爆款信息图生成技能，支持8种视觉风格，将复
 
 【火山方舟 Seedream 模型】
 6️⃣ doubao-seedream-5-0-lite-260128（Seedream 5.0 lite）
-   - 分辨率：支持 2K/3K（默认2K）
+   - 分辨率：3K 3:4（2592×3456）
    - 输出格式：png, jpeg
    - 特点：中文理解能力强，支持联网搜索融合实时信息，支持多图融合创作
    - 支持功能：文生图、文生组图、单/多图生图、流式输出
@@ -172,7 +172,7 @@ curl -s -X POST "https://ark.cn-beijing.volces.com/api/v3/images/generations" \
   -d '{
     "model": "doubao-seedream-5-0-lite-260128",
     "prompt": "[完整图片生成Prompt]",
-    "size": "2K",
+    "size": "2592x3456",
     "output_format": "png",
     "watermark": false
   }'
@@ -215,9 +215,7 @@ curl -s -X POST "https://ark.cn-beijing.volces.com/api/v3/images/generations" \
 - Endpoint: `/images/generations`
 - 认证: `Bearer $ARK_API_KEY` (环境变量)
 - 模型 ID: `doubao-seedream-5-0-lite-260128`（也支持 `doubao-seedream-5-0-260128`）
-- 尺寸选项:
-  - `2K`（默认）：2048×2048
-  - `3K`：3072×3072
+- 尺寸: `2592x3456`（3K 3:4，适合信息图竖版）
 - 重要参数:
   - `output_format`: `png` 或 `jpeg`（默认 png）
   - `watermark`: false（默认不添加水印）
