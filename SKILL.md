@@ -70,6 +70,7 @@ description: 抖音爆款信息图生成技能，支持8种视觉风格，将复
 ```
 🤖 请选择生成模型：
 
+【Tuzi API 模型】
 1️⃣ gemini-3.1-flash-image-preview-4k（别名：nano-banana-2-4k，默认推荐）
    - 分辨率：3584×4800, 4K 高清
    - 价格：¥0.25 / 张
@@ -85,6 +86,25 @@ description: 抖音爆款信息图生成技能，支持8种视觉风格，将复
    - 价格：更便宜
    - 适合：快速测试草稿
 
+【阿里云百炼 万相2.7 模型】
+4️⃣ wan2.7-image-pro（万相2.7专业版）
+   - 分辨率：支持 1K/2K/4K（默认2K）
+   - 价格：按量计费，约 ¥0.18-0.50/张（根据分辨率）
+   - 特点：中文理解能力强，支持思考模式提升质量
+   - 支持功能：文生图、图生图、组图生成、图像编辑
+
+5️⃣ wan2.7-image（万相2.7标准版）
+   - 分辨率：支持 1K/2K（默认2K）
+   - 价格：更便宜，约 ¥0.10-0.20/张
+   - 特点：生成速度更快，适合批量生成
+
+【火山方舟 Seedream 模型】
+6️⃣ doubao-seedream-5-0-lite-260128（Seedream 5.0 lite）
+   - 分辨率：支持 2K/3K（默认2K）
+   - 输出格式：png, jpeg
+   - 特点：中文理解能力强，支持联网搜索融合实时信息，支持多图融合创作
+   - 支持功能：文生图、文生组图、单/多图生图、流式输出
+
 注：默认使用 gemini-3.1-flash-image-preview-4k（性价比最优）
 ```
 
@@ -95,6 +115,10 @@ description: 抖音爆款信息图生成技能，支持8种视觉风格，将复
 **⚠️ 关键规则：串行生成，每张图片独立完成后再进行下一张**
 
 **API 调用方式：**
+
+根据选择的模型，调用不同的 API：
+
+#### Tuzi API 调用（Gemini 模型）
 
 ```bash
 # 调用图片生成 API
@@ -110,20 +134,138 @@ curl -s -X POST "https://api.tu-zi.com/v1/images/generations" \
   }'
 ```
 
+#### 阿里云百炼 API 调用（万相2.7 模型）
+
+```bash
+# 万相2.7 文生图 API 调用
+curl -s -X POST "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation" \
+  -H "Authorization: Bearer $DASHSCOPE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "wan2.7-image-pro",
+    "input": {
+      "messages": [
+        {
+          "role": "user",
+          "content": [
+            {"text": "[完整图片生成Prompt]"}
+          ]
+        }
+      ]
+    },
+    "parameters": {
+      "size": "2K",
+      "n": 1,
+      "watermark": false,
+      "thinking_mode": true
+    }
+  }'
+```
+
+#### 火山方舟 API 调用（Seedream 5.0 lite）
+
+```bash
+# Seedream 5.0 lite 文生图 API 调用
+curl -s -X POST "https://ark.cn-beijing.volces.com/api/v3/images/generations" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $ARK_API_KEY" \
+  -d '{
+    "model": "doubao-seedream-5-0-lite-260128",
+    "prompt": "[完整图片生成Prompt]",
+    "size": "2K",
+    "output_format": "png",
+    "watermark": false
+  }'
+```
+
 **API 配置：**
+
+**Tuzi API:**
 - Base URL: `https://api.tu-zi.com`
 - Endpoint: `/v1/images/generations`
-- 认证: `Bearer $TUZI_API_KEY` (环境变量，需提前设置)
+- 认证: `Bearer $TUZI_API_KEY` (环境变量)
 - 模型选项:
   - `gemini-3.1-flash-image-preview-4k`（别名：`nano-banana-2-4k`，默认）：3584×4800, 4K 高清, ¥0.25/张
   - `gemini-3-pro-image-preview-4k`（别名：`nano-banana-pro-4k`）：3584×4800, 4K 高清, ¥0.35/张
   - `nano-banana-2`：1792×2400, 快速生成
-- 模型别名映射（用户输入别名时自动转换为实际模型 ID）:
-  - `nano-banana-2-4k` → `gemini-3.1-flash-image-preview-4k`
-  - `nano-banana-pro-4k` → `gemini-3-pro-image-preview-4k`
 - 尺寸选项:
   - `3x4`（默认）：3584×4800, 4K 高清
   - `1792x2400`：1792×2400, 配合 nano-banana-2 使用
+
+**阿里云百炼 API（万相2.7）:**
+- Base URL: `https://dashscope.aliyuncs.com` (北京) 或 `https://dashscope-intl.aliyuncs.com` (新加坡)
+- Endpoint: `/api/v1/services/aigc/multimodal-generation/generation`
+- 认证: `Bearer $DASHSCOPE_API_KEY` (环境变量)
+- 模型选项:
+  - `wan2.7-image-pro`：支持 1K/2K/4K，支持思考模式
+  - `wan2.7-image`：支持 1K/2K，生成速度更快
+- 尺寸选项:
+  - `1K`：1024×1024
+  - `2K`（默认）：2048×2048  
+  - `4K`（仅pro）：4096×4096
+- 重要参数:
+  - `thinking_mode`: true/false，开启增强推理（仅pro支持）
+  - `watermark`: false（默认不添加水印）
+  - `n`: 1-4（生成图片数量）
+- 响应格式：返回JSON，图片URL在 `output.choices[0].message.content[0].image`
+- 注意：图片URL有效期24小时，需及时下载
+
+**火山方舟 API（Seedream 5.0 lite）:**
+- Base URL: `https://ark.cn-beijing.volces.com/api/v3`
+- Endpoint: `/images/generations`
+- 认证: `Bearer $ARK_API_KEY` (环境变量)
+- 模型 ID: `doubao-seedream-5-0-lite-260128`（也支持 `doubao-seedream-5-0-260128`）
+- 尺寸选项:
+  - `2K`（默认）：2048×2048
+  - `3K`：3072×3072
+- 重要参数:
+  - `output_format`: `png` 或 `jpeg`（默认 png）
+  - `watermark`: false（默认不添加水印）
+- 响应格式：兼容 OpenAI Images API，图片URL在 `data[0].url`
+- 特色：支持联网搜索，融合实时网络信息提升生图时效性
+
+**模型别名映射：**
+- `nano-banana-2-4k` → `gemini-3.1-flash-image-preview-4k`
+- `nano-banana-pro-4k` → `gemini-3-pro-image-preview-4k`
+- `wanx` / `万相` → `wan2.7-image-pro`
+
+#### Python SDK 调用（万相2.7）
+
+```python
+import os
+import dashscope
+from dashscope.aigc.image_generation import ImageGeneration
+from dashscope.api_entities.dashscope_response import Message
+
+# 设置 base URL（北京或新加坡）
+dashscope.base_http_api_url = 'https://dashscope.aliyuncs.com/api/v1'
+
+api_key = os.getenv("DASHSCOPE_API_KEY")
+
+message = Message(
+    role="user",
+    content=[
+        {"text": "[完整图片生成Prompt]"}
+    ]
+)
+
+rsp = ImageGeneration.call(
+    model='wan2.7-image-pro',
+    api_key=api_key,
+    messages=[message],
+    watermark=False,
+    n=1,
+    size="2K",
+    thinking_mode=True
+)
+
+# 获取图片URL
+if rsp.status_code == 200:
+    image_url = rsp.output.choices[0].message.content[0].image
+    print(f"图片URL: {image_url}")
+else:
+    print(f"生成失败: {rsp.code} - {rsp.message}")
+```
 
 **批量生成流程：**
 
@@ -148,9 +290,21 @@ curl -s -X POST "https://api.tu-zi.com/v1/images/generations" \
 **保存图片：**
 
 ```bash
-# 下载并保存图片
+# Tuzi API - 直接下载图片
 curl -L -s -o "<输出目录>/[主题]_[序号]_[风格].jpg" "<图片URL>"
+
+# 万相2.7 - 从JSON响应中提取图片URL后下载
+# 响应格式: {"output": {"choices": [{"message": {"content": [{"image": "URL"}]}}]}}
+# 提取URL后使用 curl 下载
+curl -L -s -o "<输出目录>/[主题]_[序号]_[风格].png" "<万相图片URL>"
 ```
+
+**响应处理差异：**
+
+| API | 响应格式 | 图片URL路径 |
+|-----|----------|-------------|
+| Tuzi API | `{"data": [{"url": "..."}]}` | `data[0].url` |
+| 万相2.7 | `{"output": {"choices": [...]}}` | `output.choices[0].message.content[0].image` |
 
 **默认输出目录：** `/Users/bytedance/Documents/trae_projects/xhs-images/`
 
