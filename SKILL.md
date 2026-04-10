@@ -93,13 +93,8 @@ description: 抖音爆款信息图生成技能，支持8种视觉风格，将复
    - 特点：中文理解能力强，支持思考模式提升质量
    - 支持功能：文生图、图生图、组图生成、图像编辑
 
-5️⃣ wan2.7-image（万相2.7标准版）
-   - 分辨率：支持 1K/2K（默认2K）
-   - 价格：更便宜，约 ¥0.10-0.20/张
-   - 特点：生成速度更快，适合批量生成
-
 【火山方舟 Seedream 模型】
-6️⃣ doubao-seedream-5-0-lite-260128（Seedream 5.0 lite）
+5️⃣ doubao-seedream-5-0-lite-260128（Seedream 5.0 lite）
    - 分辨率：3K 3:4（2592×3456）
    - 输出格式：png, jpeg
    - 特点：中文理解能力强，支持联网搜索融合实时信息，支持多图融合创作
@@ -196,9 +191,7 @@ curl -s -X POST "https://ark.cn-beijing.volces.com/api/v3/images/generations" \
 - Base URL: `https://dashscope.aliyuncs.com` (北京) 或 `https://dashscope-intl.aliyuncs.com` (新加坡)
 - Endpoint: `/api/v1/services/aigc/multimodal-generation/generation`
 - 认证: `Bearer $DASHSCOPE_API_KEY` (环境变量)
-- 模型选项:
-  - `wan2.7-image-pro`：支持 1K/2K/4K，支持思考模式
-  - `wan2.7-image`：支持 1K/2K，生成速度更快
+- 模型: `wan2.7-image-pro`
 - 尺寸: `3456*4608`（4K 3:4，适合信息图竖版，仅pro支持）
 - 重要参数:
   - `thinking_mode`: true/false，开启增强推理（仅pro支持）
