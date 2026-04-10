@@ -88,7 +88,7 @@ description: 抖音爆款信息图生成技能，支持8种视觉风格，将复
 
 【阿里云百炼 万相2.7 模型】
 4️⃣ wan2.7-image-pro（万相2.7专业版）
-   - 分辨率：支持 1K/2K/4K（默认2K）
+   - 分辨率：4K 3:4（3456×4608）
    - 价格：按量计费，约 ¥0.18-0.50/张（根据分辨率）
    - 特点：中文理解能力强，支持思考模式提升质量
    - 支持功能：文生图、图生图、组图生成、图像编辑
@@ -154,7 +154,7 @@ curl -s -X POST "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-
       ]
     },
     "parameters": {
-      "size": "2K",
+      "size": "3456*4608",
       "n": 1,
       "watermark": false,
       "thinking_mode": true
@@ -199,10 +199,7 @@ curl -s -X POST "https://ark.cn-beijing.volces.com/api/v3/images/generations" \
 - 模型选项:
   - `wan2.7-image-pro`：支持 1K/2K/4K，支持思考模式
   - `wan2.7-image`：支持 1K/2K，生成速度更快
-- 尺寸选项:
-  - `1K`：1024×1024
-  - `2K`（默认）：2048×2048  
-  - `4K`（仅pro）：4096×4096
+- 尺寸: `3456*4608`（4K 3:4，适合信息图竖版，仅pro支持）
 - 重要参数:
   - `thinking_mode`: true/false，开启增强推理（仅pro支持）
   - `watermark`: false（默认不添加水印）
